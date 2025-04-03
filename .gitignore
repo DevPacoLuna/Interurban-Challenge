@@ -1,0 +1,46 @@
+# Dependencias de Node.js
+**/node_modules/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# Archivos de construcción
+**/build/
+**/dist/
+
+# Archivos de configuración del editor
+**/.vscode/
+**/.idea/
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+
+# Archivos de logs y temporales
+**/logs/
+**/*.log
+**/*.gz
+**/tmp/
+**/*.tmp
+
+# Cachés de paquetes
+**/.pnp/
+**/.pnp.js
+**/.cache/
+
+# Archivos del sistema operativo
+**/.DS_Store
+**/Thumbs.db
+
+# Archivos de pruebas
+**/coverage/
+**/jest/
+**/cypress/screenshots/
+**/cypress/videos/
+
+# Variables de entorno
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
