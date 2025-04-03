@@ -221,3 +221,381 @@ export const AlertProvider = ({ children }) => {
 ```
 
 `PS: I change this code to have a better managment`
+
+Prompt: `create a signup and signin in the same component using formik and mui to make it responsive and organized`
+
+result:
+```
+import React, { useState } from 'react';
+import { Grid, TextField, Button, Typography, Box, Paper, Container } from '@mui/material';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+
+// Validation schemas for Sign In and Sign Up forms
+const signUpValidationSchema = Yup.object({
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Confirm password is required'),
+});
+
+const signInValidationSchema = Yup.object({
+  email: Yup.string().email('Invalid email address').required('Email is required'),
+  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+});
+
+const SignUpSignIn = () => {
+  const [isSignUp, setIsSignUp] = useState(true);
+
+  // Form submit handler for Sign Up and Sign In
+  const handleSubmit = (values) => {
+    console.log('Form Submitted:', values);
+  };
+
+  return (
+    <Container maxWidth="sm">
+      <Paper sx={{ padding: 3, marginTop: 5 }} elevation={3}>
+        <Typography variant="h4" gutterBottom>
+          {isSignUp ? 'Sign Up' : 'Sign In'}
+        </Typography>
+
+        <Formik
+          initialValues={{
+            email: '',
+            password: '',
+            confirmPassword: '',
+          }}
+          validationSchema={isSignUp ? signUpValidationSchema : signInValidationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ setFieldValue, isSubmitting }) => (
+            <Form>
+              <Grid container spacing={2}>
+                {/* Email Field */}
+                <Grid item xs={12}>
+                  <Field
+                    name="email"
+                    as={TextField}
+                    label="Email"
+                    fullWidth
+                    variant="outlined"
+                    helperText={<ErrorMessage name="email" />}
+                    error={Boolean(<ErrorMessage name="email" />)}
+                  />
+                </Grid>
+
+                {/* Password Field */}
+                <Grid item xs={12}>
+                  <Field
+                    name="password"
+                    as={TextField}
+                    label="Password"
+                    fullWidth
+                    type="password"
+                    variant="outlined"
+                    helperText={<ErrorMessage name="password" />}
+                    error={Boolean(<ErrorMessage name="password" />)}
+                  />
+                </Grid>
+
+                {/* Confirm Password Field (Only for Sign Up) */}
+                {isSignUp && (
+                  <Grid item xs={12}>
+                    <Field
+                      name="confirmPassword"
+                      as={TextField}
+                      label="Confirm Password"
+                      fullWidth
+                      type="password"
+                      variant="outlined"
+                      helperText={<ErrorMessage name="confirmPassword" />}
+                      error={Boolean(<ErrorMessage name="confirmPassword" />)}
+                    />
+                  </Grid>
+                )}
+
+                {/* Submit Button */}
+                <Grid item xs={12}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    disabled={isSubmitting}
+                  >
+                    {isSignUp ? 'Sign Up' : 'Sign In'}
+                  </Button>
+                </Grid>
+
+                {/* Toggle between Sign In / Sign Up */}
+                <Grid item xs={12} sx={{ textAlign: 'center' }}>
+                  <Button
+                    variant="text"
+                    onClick={() => setIsSignUp(!isSignUp)}
+                  >
+                    {isSignUp ? 'Already have an account? Sign In' : 'Don’t have an account? Sign Up'}
+                  </Button>
+                </Grid>
+              </Grid>
+            </Form>
+          )}
+        </Formik>
+      </Paper>
+    </Container>
+  );
+};
+
+export default SignUpSignIn;
+```
+
+`PS I have to change a little sections because Im using typescript`
+
+prompt: `give me the styles but with scss module`
+
+result:
+```
+.container {
+  min-height: 100vh;
+  background-image: url('https://source.unsplash.com/random');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paper {
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  background-color: #1976d2; /* Replace with theme primary color */
+}
+
+.title {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #1976d2; /* Replace with theme primary color */
+}
+
+.formField {
+  margin-bottom: 1.5rem;
+}
+
+.submitButton {
+  margin-top: 1rem;
+}
+
+.toggleButton {
+  text-align: center;
+  margin-top: 1rem;
+  display: block;
+}
+```
+
+prompt: `create a home page where shows a list of cities with it current weather im showing name of each city, temperature and weather condition, make it with MUI, Typescript and use Saas modules to make it beautiful`
+
+```
+/* HomePage.module.scss */
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.cityCard {
+  width: 300px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.cityName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  margin-bottom: 1rem;
+}
+
+.weatherInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.temperature {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.weatherCondition {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.cardIcon {
+  font-size: 3rem;
+  color: #1976d2;
+  margin-bottom: 1rem;
+}
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Card, CardContent, Typography, CircularProgress } from '@mui/material';
+import { WiDaySunny, WiCloud, WiRain } from 'react-icons/wi';
+import styles from './HomePage.module.scss';
+
+// Define types for the city and weather response
+interface WeatherData {
+  main: {
+    temp: number;
+  };
+  weather: [
+    {
+      description: string;
+      icon: string;
+    }
+  ];
+}
+
+interface CityWeather {
+  name: string;
+  weatherData?: WeatherData;
+  isLoading: boolean;
+}
+
+const HomePage: React.FC = () => {
+  const [cities, setCities] = useState<CityWeather[]>([
+    { name: 'New York', isLoading: true },
+    { name: 'London', isLoading: true },
+    { name: 'Tokyo', isLoading: true },
+    { name: 'Sydney', isLoading: true },
+    { name: 'Paris', isLoading: true },
+  ]);
+
+  const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // Replace with your OpenWeatherMap API key
+
+  useEffect(() => {
+    const fetchWeather = async (city: string, index: number) => {
+      try {
+        const response = await axios.get<WeatherData>(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+        );
+        setCities((prevCities) =>
+          prevCities.map((city, i) =>
+            i === index ? { ...city, weatherData: response.data, isLoading: false } : city
+          )
+        );
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+        setCities((prevCities) =>
+          prevCities.map((city, i) =>
+            i === index ? { ...city, isLoading: false } : city
+          )
+        );
+      }
+    };
+
+    cities.forEach((city, index) => {
+      if (city.isLoading) {
+        fetchWeather(city.name, index);
+      }
+    });
+  }, [cities, apiKey]);
+
+  const renderWeatherIcon = (condition: string) => {
+    switch (condition) {
+      case 'clear sky':
+        return <WiDaySunny />;
+      case 'clouds':
+        return <WiCloud />;
+      case 'rain':
+        return <WiRain />;
+      default:
+        return <WiDaySunny />;
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      {cities.map((city, index) => (
+        <Card key={city.name} className={styles.cityCard}>
+          <CardContent>
+            <Typography className={styles.cityName}>{city.name}</Typography>
+            {city.isLoading ? (
+              <CircularProgress />
+            ) : (
+              city.weatherData && (
+                <div className={styles.weatherInfo}>
+                  <div className={styles.cardIcon}>{renderWeatherIcon(city.weatherData.weather[0].description)}</div>
+                  <Typography className={styles.temperature}>
+                    {city.weatherData.main.temp}°C
+                  </Typography>
+                  <Typography className={styles.weatherCondition}>
+                    {city.weatherData.weather[0].description}
+                  </Typography>
+                </div>
+              )
+            )}
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+prompt: `fix cors on express`
+
+```
+// npm install cors
+
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+// Enable CORS for all routes
+app.use(cors());
+
+// OR specify more specific CORS options (e.g., only allow certain origins):
+app.use(cors({
+  origin: 'http://example.com', // allow only this domain
+  methods: ['GET', 'POST'],     // allow specific methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // allow specific headers
+}));
+
+// Define your routes here
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+```

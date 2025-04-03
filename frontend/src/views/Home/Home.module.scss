@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.cityCardLink {
+  text-decoration: none;
+}
+
+.cityCard {
+  width: 300px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.cityName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1976d2;
+  margin-bottom: 1rem;
+  text-decoration: none;
+}
+
+.weatherInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.temperature {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.weatherCondition {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.cardIcon {
+  font-size: 3rem;
+  color: #1976d2;
+  margin-bottom: 1rem;
+}
