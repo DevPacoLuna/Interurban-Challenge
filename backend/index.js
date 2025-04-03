@@ -1,11 +1,22 @@
 const express = require("express");
 const axios = require("axios");
+const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
-const port = 3000;
+const port = 4000;
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
+
+app.use(cors());
+
+app.use(
+  cors({
+    origin: "http://localhost:3001", // allow only this domain
+    methods: ["GET", "POST"], // allow specific methods
+    allowedHeaders: ["Content-Type", "Authorization"], // allow specific headers
+  })
+);
 
 app.get("/cities", async (req, res) => {
   try {
