@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import { AlertProvider } from "./providers/AlertProvider";
+import { AuthProvider } from "./providers/AuthProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -10,7 +11,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AlertProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </AlertProvider>
   </React.StrictMode>
 );

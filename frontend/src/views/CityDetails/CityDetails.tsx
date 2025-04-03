@@ -64,11 +64,13 @@ const CityDetails = () => {
         <CircularProgress />
       ) : (
         <>
-          <img
-            src={cityImage || ""}
-            alt={`${cityName}`}
-            className={styles.cityImage}
-          />
+          {cityImage && (
+            <img
+              src={cityImage}
+              alt={`${cityName}`}
+              className={styles.cityImage}
+            />
+          )}
           <Typography className={styles.cityName}>{cityName}</Typography>
 
           <div className={styles.weatherDetails}>

@@ -1,16 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent, CircularProgress, Typography } from "@mui/material";
-import { WbSunny, Cloud, InvertColors } from "@mui/icons-material";
+import {
+  WbSunny,
+  Cloud,
+  WaterDrop,
+  AcUnit,
+  Thunderstorm,
+  Foggy,
+} from "@mui/icons-material";
 import styles from "./Home.module.scss";
 import { Link } from "react-router-dom";
 
-// Define types for the city and weather response
 interface WeatherData {
   name: string;
   temperature: number;
-  condition: string;
+  condition: conditionTypes;
 }
+
+type conditionTypes =
+  | "clear sky"
+  | "few clouds"
+  | "scattered clouds"
+  | "broken clouds"
+  | "shower rain"
+  | "rain"
+  | "thunderstorm"
+  | "snow"
+  | "mist";
 
 const Home = () => {
   const [cities, setCities] = useState<WeatherData[]>();
@@ -37,14 +54,23 @@ const Home = () => {
     fetchWeather();
   }, []);
 
-  const renderWeatherIcon = (condition: string) => {
+  const renderWeatherIcon = (condition: conditionTypes) => {
     switch (condition) {
       case "clear sky":
         return <WbSunny />;
-      case "clouds":
+      case "few clouds":
+      case "broken clouds":
+      case "scattered clouds":
         return <Cloud />;
+      case "shower rain":
       case "rain":
-        return <InvertColors />;
+        return <WaterDrop />;
+      case "thunderstorm":
+        return <Thunderstorm />;
+      case "snow":
+        return <AcUnit />;
+      case "mist":
+        return <Foggy />;
       default:
         return <WbSunny />;
     }
@@ -54,8 +80,12 @@ const Home = () => {
     <div className={styles.container}>
       {cities && !isLoading ? (
         cities.map((city, index) => (
-          <Link to={`/city/${city.name}`} className={styles.cityCardLink}>
-            <Card key={city.name} className={styles.cityCard}>
+          <Link
+            to={`/city/${city.name}`}
+            className={styles.cityCardLink}
+            key={city.name}
+          >
+            <Card className={styles.cityCard}>
               <CardContent>
                 <Typography className={styles.cityName}>{city.name}</Typography>
                 <div className={styles.weatherInfo}>

@@ -599,3 +599,109 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 ```
+
+prompt: `create a simple header with MUI, Typescript and saas modules just with logo and login icon`
+
+result:
+```
+.header {
+  background-color: #1976d2; // MUI primary blue
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-weight: bold;
+}
+
+const Header: React.FC = () => {
+  return (
+    <AppBar position="static" className={styles.header}>
+      <Toolbar className={styles.toolbar}>
+        <Typography variant="h6" className={styles.logo}>
+          MyLogo
+        </Typography>
+        <IconButton color="inherit">
+          <AccountCircle />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
+  );
+};
+```
+
+prompt: `create an auth provider to handle authentication when login`
+prompt update: `handle a token on localstorage and pass a prop to set user on another component`
+
+results:
+
+```
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+
+interface AuthContextType {
+  user: string | null;
+  token: string | null;
+  login: (username: string, token: string) => void;
+  logout: () => void;
+  setUser: (username: string | null) => void;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<string | null>(localStorage.getItem("user"));
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", user);
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [token]);
+
+  const login = (username: string, authToken: string) => {
+    setUser(username);
+    setToken(authToken);
+  };
+
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, token, login, logout, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+```
+
+prompt: `convert a string into numbers and letters`
+
+result:
+```
+function convertString(str: string): string {
+    return str
+        .split('')
+        .map(char => char.charCodeAt(0).toString(36)) // Convert ASCII to base-36 (numbers + letters)
+        .join('');
+}
+```

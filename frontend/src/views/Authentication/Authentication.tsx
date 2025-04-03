@@ -9,20 +9,36 @@ import {
 import Grid from "@mui/material/GridLegacy";
 
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Authentication,
   signInValidationSchema,
   signUpValidationSchema,
 } from "./Form";
 import classes from "./Authentication.module.scss";
+import { AuthContext } from "../../providers/AuthProvider";
+import { generateToken } from "../../lib/helper/generateToken";
+import { AlertContext } from "../../providers/AlertProvider";
+import { useNavigate } from "react-router-dom";
 
 export const Auth = () => {
+  const { login, setUser } = useContext(AuthContext);
+  const { setAlertMessage, setOpenAlert } = useContext(AlertContext);
   const [isSignUp, setIsSignUp] = useState<boolean>(true);
+  const navigate = useNavigate();
 
-  // Form submit handler for Sign Up and Sign In
   const handleSubmit = (values: Authentication) => {
-    console.log("Form Submitted:", values);
+    const username = values.userName !== "" ? values.userName : values.email;
+    const token = generateToken(values.email + values.password);
+    login(values.email, token);
+
+    setUser(username);
+    setAlertMessage({
+      message: `Hello ${username}`,
+      type: "success",
+    });
+    setOpenAlert(true);
+    navigate("/");
   };
 
   return (
@@ -40,6 +56,7 @@ export const Auth = () => {
           <Formik
             initialValues={{
               email: "",
+              userName: "",
               password: "",
               confirmPassword: "",
             }}
@@ -48,10 +65,25 @@ export const Auth = () => {
             }
             onSubmit={handleSubmit}
           >
-            {({ setFieldValue, isSubmitting }) => (
+            {({ setFieldValue, isSubmitting, resetForm }) => (
               <Form>
                 <Grid container spacing={2}>
                   {/* Email Field */}
+                  {isSignUp && (
+                    <Grid item xs={12}>
+                      <Field
+                        name="userName"
+                        as={TextField}
+                        label="Username"
+                        fullWidth
+                        variant="outlined"
+                        helperText={<ErrorMessage name="email" />}
+                        error={Boolean(<ErrorMessage name="email" />)}
+                        className={classes.formField}
+                      />
+                    </Grid>
+                  )}
+
                   <Grid item xs={12}>
                     <Field
                       name="email"
@@ -115,7 +147,10 @@ export const Auth = () => {
                   <Grid item xs={12}>
                     <Button
                       variant="text"
-                      onClick={() => setIsSignUp(!isSignUp)}
+                      onClick={() => {
+                        setIsSignUp(!isSignUp);
+                        resetForm();
+                      }}
                       className={classes.toggleButton}
                     >
                       {isSignUp

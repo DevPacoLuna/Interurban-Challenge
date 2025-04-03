@@ -22,16 +22,17 @@
 
 .weatherDetails {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
   align-items: center;
+  justify-content: center;
   margin-top: 2rem;
 }
 
 .weatherCard {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  max-width: 600px;
+  max-width: 200px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
