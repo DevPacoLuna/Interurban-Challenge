@@ -3,7 +3,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 const app = express();
-const port = 3000;
+const port = 4000;
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
 

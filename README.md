@@ -150,3 +150,74 @@ app.get("/forecast", async (req, res) => {
 });
 
 ```
+
+
+## Frontend
+
+prompt: `create route system to 4 views sign in, sign up, list of cities as home and show each city`
+
+result: 
+```
+  <Router>
+    <Routes>
+      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/city/:cityName" element={<CityDetails />} />
+    </Routes>
+  </Router>
+```
+
+prompt: `create an alert provider to show alerts on top of page with MUI`
+
+result:
+```
+import React, { createContext, useContext, useState } from 'react';
+import { Snackbar, Alert } from '@mui/material';
+
+// Create a context for alerts
+const AlertContext = createContext();
+
+// Custom hook to use the Alert context
+export const useAlert = () => {
+  return useContext(AlertContext);
+};
+
+// Alert Provider to wrap around your application
+export const AlertProvider = ({ children }) => {
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [severity, setSeverity] = useState('info'); // 'success', 'error', 'warning', 'info'
+
+  // Function to trigger alert
+  const showAlert = (message, severity = 'info') => {
+    setMessage(message);
+    setSeverity(severity);
+    setOpen(true);
+  };
+
+  // Close alert
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <AlertContext.Provider value={{ showAlert }}>
+      {children}
+
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+    </AlertContext.Provider>
+  );
+};
+```
+
+`PS: I change this code to have a better managment`
