@@ -141,7 +141,7 @@ app.listen(PORT, () => {
 ```
 I modified this code to save the credentials in .env and installed the necessary libraries to continue.
 
-I had some trouble with the next endpoint because it needed the OpenWeatherMap basic subscription API, but with the help of AI, I was able to use the "forecast" endpoint instead of "forecast/daily".
+I had some trouble with the next endpoint because it needed the OpenWeatherMap basic subscription API, but with the help of AI, I was able to use the `forecast` endpoint instead of `forecast/daily`.
 
 Prompt:
 `create an endpoint which i can send a city name and it returns the next 7 days weather only date, temperature min and max, and weather condition.`
@@ -242,7 +242,7 @@ P.S.: I made changes as I progressed on the front end.
 
 ### Frontend with AI
 
-As a next step, I focused on generating an application with "create-react-app" using TypeScript. I added libraries such as MUI, Formik, Yup, and others to support quick code generation.
+As a next step, I focused on generating an application with `create-react-app` using TypeScript. I added libraries such as MUI, Formik, Yup, and others to support quick code generation.
 
 I started by creating the routes section in `app.tsx`:
 
