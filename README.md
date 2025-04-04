@@ -1,5 +1,69 @@
+# Interurban Challenge <img src="https://github.com/user-attachments/assets/f1fb12c7-07db-4a66-8a48-397daae8513e" alt="logo" width="80"/>
 
-# Interurban-Challenge
+## Index
+
+1. [Overview](#overview)
+2. [Installation](#installation)
+    - [Requirements](#requirements)
+    - [Getting Started](#getting-started)
+3. [AI Features](#ai-features)
+    - [Backend](#backend-with-ai)
+    - [Frontend](#frontend-with-ai)
+4. [License](#license)
+5. [Acknowledgements](#acknowledgements)
+6. [Contact](#contact)
+
+---
+
+## Overview
+
+**Interurban Challenge** .
+
+---
+
+## Installation
+
+### Requirements
+
+- Node.js v18.17.0
+- npm (or yarn)
+- A modern browser (for web projects)
+
+### Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/project-name.git
+   ```
+2. Navigate into frontend project folder:
+   ```bash
+   cd frontend
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+   ```bash
+   npm start
+   ```
+5. In another terminal navigate into backend project folder:
+   ```bash
+   cd backend
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+   ```bash
+   npm start
+   ```
+---
+
+## AI Features
 
 ## Backend with AI
 
@@ -152,7 +216,7 @@ app.get("/forecast", async (req, res) => {
 ```
 
 
-## Frontend
+## Frontend with AI
 
 prompt: `create route system to 4 views sign in, sign up, list of cities as home and show each city`
 
@@ -705,3 +769,28 @@ function convertString(str: string): string {
         .join('');
 }
 ```
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Acknowledgements
+
+Special thanks to:
+
+- [Paco Luna](https://github.com/DevPacoLuna) for [All].
+
+---
+
+## Contact
+
+If you have any questions or suggestions, feel free to reach out:
+
+- **Email:** [dev.luna@outlook.com](mailto:dev.luna@outlook.com)
+- **Linkedin:** [PacoLuna](https://www.linkedin.com/in/francisco-javier-luna-figueroa/)
+
+---
