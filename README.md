@@ -6,7 +6,7 @@
 2. [Installation](#installation)
     - [Requirements](#requirements)
     - [Getting Started](#getting-started)
-3. [AI Features](#ai-features)
+3. [AI Workflow](#ai-workflow)
     - [Backend](#backend-with-ai)
     - [Frontend](#frontend-with-ai)
 4. [License](#license)
@@ -17,7 +17,7 @@
 
 ## Overview
 
-**Interurban Challenge** .
+**Weather Webpage** is a user-friendly platform designed to provide real-time weather updates of many states. It allows users to quickly check current weather conditions, including temperature, based on their location or any city they choose. With an intuitive interface and accurate weather data, it’s the perfect tool to stay informed about changing weather conditions.
 
 ---
 
@@ -61,11 +61,31 @@
    ```bash
    npm start
    ```
+5. Don't forget to add .env file on each folder
+   ```
+   # Frontend
+   REACT_APP_UNSPLASH_API_KEY=
+   REACT_APP_BACKEND_API_URL=
+   # Backend
+   OPENWEATHER_API_KEY=
+   ```
+   
 ---
 
-## AI Features
+## AI Workflow
 
-## Backend with AI
+As a first step, I determined the technology I would use for the frontend and backend:
+
+Frontend: React + Typescript
+Backend: Express + Javascript
+
+I chose React because it allows me to manage my folders and files as I prefer, and Express makes it very easy to create a usable environment in minutes.
+
+I used Chat GPT throughout the development, along with my technical knowledge.
+
+### Backend with AI
+
+I started on the backend side by generating an API as quickly as possible, adding the endpoints to use and what the endpoint should return.
 
 Prompt:
 `create an endpoint which list all the cities using this endpoint "https://search.reservamos.mx/api/v2/places" filter just result_type="city"`
@@ -119,7 +139,9 @@ app.listen(PORT, () => {
 });
 
 ```
+I modified this code to save the credentials in .env and installed the necessary libraries to continue.
 
+I had some trouble with the next endpoint because it needed the OpenWeatherMap basic subscription API, but with the help of AI, I was able to use the "forecast" endpoint instead of "forecast/daily".
 
 Prompt:
 `create an endpoint which i can send a city name and it returns the next 7 days weather only date, temperature min and max, and weather condition.`
@@ -214,9 +236,15 @@ app.get("/forecast", async (req, res) => {
 });
 
 ```
+After making a few more minor corrections, the backend was already finished in its basic form.
 
+P.S.: I made changes as I progressed on the front end.
 
-## Frontend with AI
+### Frontend with AI
+
+As a next step, I focused on generating an application with "create-react-app" using TypeScript. I added libraries such as MUI, Formik, Yup, and others to support quick code generation.
+
+I started by creating the routes section in `app.tsx`:
 
 prompt: `create route system to 4 views sign in, sign up, list of cities as home and show each city`
 
@@ -231,6 +259,10 @@ result:
     </Routes>
   </Router>
 ```
+
+This way, I began organizing my files and deciding which components I would use. In the end, I decided to use only one for sign-in and sign-up.
+
+At the same time, I considered using a provider for the alerts that would be displayed on the page.
 
 prompt: `create an alert provider to show alerts on top of page with MUI`
 
@@ -283,8 +315,9 @@ export const AlertProvider = ({ children }) => {
   );
 };
 ```
+I modified most of this one because I had in mind a better way to use the state variables.
 
-`PS: I change this code to have a better managment`
+Then I moved on to creating the first view, which would be the authentication. As I explained before, I used a single component, and with the help of Formik's structure, the inputs were perfectly arranged.
 
 Prompt: `create a signup and signin in the same component using formik and mui to make it responsive and organized`
 
@@ -413,7 +446,7 @@ const SignUpSignIn = () => {
 export default SignUpSignIn;
 ```
 
-`PS I have to change a little sections because Im using typescript`
+Since this was one of the most time-consuming tasks, I decided to generate the styles using SaaS modules.
 
 prompt: `give me the styles but with scss module`
 
@@ -465,6 +498,7 @@ result:
   display: block;
 }
 ```
+The next view was the homepage, where the list of cities and their weather would be displayed.
 
 prompt: `create a home page where shows a list of cities with it current weather im showing name of each city, temperature and weather condition, make it with MUI, Typescript and use Saas modules to make it beautiful`
 
@@ -633,6 +667,9 @@ const HomePage: React.FC = () => {
 
 export default HomePage;
 ```
+In this view, I modified the interfaces to match my API, fetch, and renderWeatherIcon to correctly define the icons that can be displayed depending on the text returned by the endpoint.
+
+I went back to the backend a bit to fix the Cors so I could continue testing the API, but now directly with the frontend.
 
 prompt: `fix cors on express`
 
@@ -663,6 +700,7 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 ```
+Seeing the need for a logout header, I decided to generate a simple but responsive one, along with an image I generated from Leonardo AI.
 
 prompt: `create a simple header with MUI, Typescript and saas modules just with logo and login icon`
 
@@ -697,6 +735,8 @@ const Header: React.FC = () => {
   );
 };
 ```
+
+The next step was to create a provider for authentication.
 
 prompt: `create an auth provider to handle authentication when login`
 prompt update: `handle a token on localstorage and pass a prop to set user on another component`
@@ -757,6 +797,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 ```
+In it, I decided to store some variables in Localstorage to maintain the session.
+
+Finally, I used Chat GPT to generate a simple function to create a token, just for storage purposes in Localstorage.
 
 prompt: `convert a string into numbers and letters`
 
