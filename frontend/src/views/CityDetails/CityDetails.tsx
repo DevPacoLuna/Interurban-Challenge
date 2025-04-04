@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, CardContent, Typography, CircularProgress } from "@mui/material";
 import styles from "./CityDetails.module.scss";
+import { AlertContext } from "../../providers/AlertProvider";
 
 interface ForecastData {
   date: string;
@@ -16,6 +17,7 @@ const CityDetails = () => {
   const [forecast, setForecast] = useState<ForecastData[]>();
   const [cityImage, setCityImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { setAlertMessage, setOpenAlert } = useContext(AlertContext);
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -26,11 +28,14 @@ const CityDetails = () => {
 
         const data = weatherResponse.data;
         setForecast(data);
-        setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching weather data:", error);
-        setIsLoading(false);
+        setAlertMessage({
+          message: `Error fetching weather data:${error}`,
+          type: "error",
+        });
+        setOpenAlert(true);
       }
+      setIsLoading(false);
     };
 
     const fetchCityImage = async () => {
